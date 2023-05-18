@@ -60,6 +60,7 @@ export class AdviceCard extends LitElement {
         --highlight-color: lime;
         --text-color: inherit;
         --bg-color: grey;
+        --drop-shadow-color: black;
         display: block;
         border-radius: 0.25em;
         padding: 1em 1em 0.125em;
@@ -68,6 +69,7 @@ export class AdviceCard extends LitElement {
         width: min(500px, 100% - 1em);
 
         text-align: center;
+        box-shadow: 0px 0px 20px var(--drop-shadow-color);
       }
 
       @media (min-width: 400px) {
