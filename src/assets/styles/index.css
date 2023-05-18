@@ -1,0 +1,22 @@
+:root {
+  --cyan: hsl(193, 38%, 86%);
+  --green: hsl(150 100% 66%);
+  --grey-blue: hsl(217 19% 38%);
+  --dark-grey-blue: hsl(217 19% 24%);
+  --dark-blue: hsl(218 23% 16%);
+
+  --fs-base: 28px;
+  --ff-base: 'Manrope', sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--dark-blue);
+
+  font-family: var(--ff-base);
+  font-size: var(--fs-base);
+  color: var(--cyan);
+}
