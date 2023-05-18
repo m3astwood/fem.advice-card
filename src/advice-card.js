@@ -37,7 +37,9 @@ export class AdviceCard extends LitElement {
   }
 
   async getAdvice() {
-    const res = await fetch("https://api.adviceslip.com/advice");
+    const res = await fetch("https://api.adviceslip.com/advice", {
+      cache: "no-cache",
+    });
     const { slip: json } = await res.json();
 
     console.log(json);
