@@ -42,8 +42,6 @@ export class AdviceCard extends LitElement {
     });
     const { slip: json } = await res.json();
 
-    console.log(json);
-
     this.advice = { ...json };
   }
 
