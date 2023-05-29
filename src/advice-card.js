@@ -76,7 +76,7 @@ export class AdviceCard extends LitElement {
         --text-color: inherit;
         --bg-color: grey;
         --drop-shadow-color: black;
-        width: max-content;
+        width: min(500px, 100% - 2em);
       }
 
 
@@ -85,9 +85,6 @@ export class AdviceCard extends LitElement {
         border-radius: 0.25em;
         padding: 1em 1em 2em;
         background-color: var(--bg-color);
-
-        max-width: 500px;
-
         text-align: center;
         box-shadow: 0px 0px 20px var(--drop-shadow-color);
         transition: opacity 0.125s;
