@@ -7,6 +7,7 @@ import diceButton from "./assets/images/icon-dice.svg";
 export class AdviceCard extends LitElement {
   static get properties() {
     return {
+      loading: { type: Boolean, state: true },
       advice: { type: Object, state: true },
       buttonDisabled: { type: Boolean, state: true },
     };
@@ -14,6 +15,7 @@ export class AdviceCard extends LitElement {
 
   constructor() {
     super();
+    this.loading = false;
     this.buttonDisabled = false;
     this.advice = {};
     this.getAdvice();
@@ -21,6 +23,9 @@ export class AdviceCard extends LitElement {
 
   render() {
     return html`
+    <div 
+      class="card ${this.buttonDisabled ? "disabled" : ""}"
+    >
       <h1>advice #${this.advice.id}</h1>
       <p>${this.advice.advice}</p>
 
@@ -28,11 +33,19 @@ export class AdviceCard extends LitElement {
         srcset="${mobileDivider} 375w, ${desktopDivider} 500w"
         sizes="(max-width: 500px) 375px, 500px"
       >
+    </div>
+
+    <div class="control">
+      <button 
+        @click="${this.newAdvice}" 
+        class="${this.buttonDisabled ? "disabled" : ""}"
+        ?disabled="${this.buttonDisabled}"
+      >
       
-      <button @click="${this.newAdvice}" ?disabled="${this.buttonDisabled}">
         <img src="${diceButton}">
         <span>another piece of advice!</span>
       </button>
+    </div>
     `;
   }
 
@@ -47,11 +60,13 @@ export class AdviceCard extends LitElement {
 
   newAdvice() {
     this.buttonDisabled = true;
-    this.getAdvice();
+    setTimeout(() => {
+      this.getAdvice();
+    }, 500);
 
     setTimeout(() => {
       this.buttonDisabled = false;
-    }, 2000);
+    }, 1500);
   }
 
   static get styles() {
@@ -61,21 +76,37 @@ export class AdviceCard extends LitElement {
         --text-color: inherit;
         --bg-color: grey;
         --drop-shadow-color: black;
+        width: max-content;
+      }
+
+
+      .card  {
         display: block;
         border-radius: 0.25em;
-        padding: 1em 1em 0.125em;
+        padding: 1em 1em 2em;
         background-color: var(--bg-color);
 
-        width: min(500px, 100% - 1em);
+        max-width: 500px;
 
         text-align: center;
         box-shadow: 0px 0px 20px var(--drop-shadow-color);
+        transition: opacity 0.125s;
+      }
+
+      .card.disabled {
+        opacity: 0;
       }
 
       @media (min-width: 400px) {
-        :host {
+        .card {
           border-radius: 0.5em;
         }
+      }
+
+      .control {
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: center;
       }
 
       img {
@@ -106,22 +137,23 @@ export class AdviceCard extends LitElement {
       }
 
       button {
-        position: relative;
-        top: 2em;
         border: none;
         background-color: var(--highlight-color);
         padding: 1.25em;
         border-radius: 100vmax;
         transform-origin: center;
-        cursor: pointer;
         filter: drop-shadow(0px 0px 0px var(--highlight-color));
-        transition: filter 0.25s ease;
+        transition: filter 0.25s ease, transform 0.125s ease, opacity 0.125s ease;
+        transform: translateY(0%);
       }
 
-      button:disabled {
-        filter: saturate(0);
-        opacity: 0.125;
-        animation: slowFadeIn 2s forwards;
+      button:not(:disabled) {
+        cursor: pointer;
+      }
+
+      button.disabled {
+        transform: translateY(110%);
+        opacity: 0;
       }
 
       button:not(:disabled):active {
@@ -135,17 +167,6 @@ export class AdviceCard extends LitElement {
       button > span {
         display: none;
         opacity: 0;
-      }
-
-      @keyframes slowFadeIn {
-        80% {
-          opacity: 0.125;
-          filter: saturate(0);
-        }
-        to {
-          opacity: 1;
-          filter: saturate(1)
-        }
       }
     `;
   }
